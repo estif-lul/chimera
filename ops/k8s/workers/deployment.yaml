@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chimera-workers
+  labels:
+    app: chimera-workers
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chimera-workers
+  template:
+    metadata:
+      labels:
+        app: chimera-workers
+    spec:
+      containers:
+        - name: worker
+          image: chimera/backend:latest
+          args: ["--spring.profiles.active=worker"]
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: chimera-db
+                  key: url
+            - name: SPRING_DATA_REDIS_HOST
+              value: "redis-service"
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "1500m"
+              memory: "2Gi"
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: chimera-workers-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: chimera-workers
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60

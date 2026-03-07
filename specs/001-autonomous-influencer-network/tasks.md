@@ -11,10 +11,10 @@
 
 **Purpose**: Scaffold the monorepo application surfaces and local developer entry points.
 
-- [ ] T001 Scaffold the Spring Boot backend module in backend/pom.xml
-- [ ] T002 Scaffold the React Vite frontend and test toolchain in frontend/package.json, frontend/vite.config.ts, and frontend/tsconfig.json
-- [ ] T003 [P] Create local infrastructure and environment templates in ops/docker-compose.yml, backend/src/main/resources/application.yml, and frontend/.env.example
-- [ ] T004 [P] Seed API and operations documentation stubs in docs/api/README.md and docs/operations/README.md
+- [x] T001 Scaffold the Spring Boot backend module in backend/pom.xml
+- [x] T002 Scaffold the React Vite frontend and test toolchain in frontend/package.json, frontend/vite.config.ts, and frontend/tsconfig.json
+- [x] T003 [P] Create local infrastructure and environment templates in ops/docker-compose.yml, backend/src/main/resources/application.yml, and frontend/.env.example
+- [x] T004 [P] Seed API and operations documentation stubs in docs/api/README.md and docs/operations/README.md
 
 ---
 
@@ -24,14 +24,14 @@
 
 **⚠️ CRITICAL**: No user story work should start before this phase is complete.
 
-- [ ] T005 Establish the baseline relational schema for tenants, auth, agents, campaigns, review, memory, wallets, audit, and video jobs in backend/src/main/resources/db/migration/V1__baseline_control_plane.sql
-- [ ] T006 [P] Implement tenant-scoped security, local login, and OIDC session configuration in backend/src/main/java/com/chimera/config/SecurityConfig.java and backend/src/main/java/com/chimera/controller/AuthController.java
-- [ ] T007 [P] Create request and response DTOs aligned to specs/001-autonomous-influencer-network/contracts/chimera-control-plane.openapi.yaml in backend/src/main/java/com/chimera/controller/dto/
-- [ ] T008 [P] Configure PostgreSQL, Redis, and Weaviate adapters in backend/src/main/java/com/chimera/persistence/postgres/, backend/src/main/java/com/chimera/persistence/redis/, and backend/src/main/java/com/chimera/persistence/weaviate/
-- [ ] T009 [P] Implement immutable audit logging, correlation IDs, and global API exception handling in backend/src/main/java/com/chimera/service/AuditService.java, backend/src/main/java/com/chimera/config/CorrelationIdFilter.java, and backend/src/main/java/com/chimera/controller/ApiExceptionHandler.java
-- [ ] T010 [P] Define MCP resource and platform connector interfaces in backend/src/main/java/com/chimera/mcp/McpResourceClient.java and backend/src/main/java/com/chimera/persistence/external/connectors/PlatformConnector.java
-- [ ] T011 [P] Create the frontend app shell, auth bootstrap, and tenant-scoped route guards in frontend/src/app/App.tsx, frontend/src/routes/index.tsx, and frontend/src/features/auth/
-- [ ] T012 Implement the shared frontend API client, query configuration, and session state hooks in frontend/src/services/api/client.ts, frontend/src/app/queryClient.ts, and frontend/src/features/auth/useSession.ts
+- [x] T005 Establish the baseline relational schema for tenants, auth, agents, campaigns, review, memory, wallets, audit, and video jobs in backend/src/main/resources/db/migration/V1__baseline_control_plane.sql
+- [x] T006 [P] Implement tenant-scoped security, local login, and OIDC session configuration in backend/src/main/java/com/chimera/config/SecurityConfig.java and backend/src/main/java/com/chimera/controller/AuthController.java
+- [x] T007 [P] Create request and response DTOs aligned to specs/001-autonomous-influencer-network/contracts/chimera-control-plane.openapi.yaml in backend/src/main/java/com/chimera/controller/dto/
+- [x] T008 [P] Configure PostgreSQL, Redis, and Weaviate adapters in backend/src/main/java/com/chimera/persistence/postgres/, backend/src/main/java/com/chimera/persistence/redis/, and backend/src/main/java/com/chimera/persistence/weaviate/
+- [x] T009 [P] Implement immutable audit logging, correlation IDs, and global API exception handling in backend/src/main/java/com/chimera/service/AuditService.java, backend/src/main/java/com/chimera/config/CorrelationIdFilter.java, and backend/src/main/java/com/chimera/controller/ApiExceptionHandler.java
+- [x] T010 [P] Define MCP resource and platform connector interfaces in backend/src/main/java/com/chimera/mcp/McpResourceClient.java and backend/src/main/java/com/chimera/persistence/external/connectors/PlatformConnector.java
+- [x] T011 [P] Create the frontend app shell, auth bootstrap, and tenant-scoped route guards in frontend/src/app/App.tsx, frontend/src/routes/index.tsx, and frontend/src/features/auth/
+- [x] T012 Implement the shared frontend API client, query configuration, and session state hooks in frontend/src/services/api/client.ts, frontend/src/app/queryClient.ts, and frontend/src/features/auth/useSession.ts
 
 **Checkpoint**: Foundation ready. User story phases can now proceed in priority order or in parallel where dependencies allow.
 
@@ -45,20 +45,20 @@
 
 ### Tests for User Story 1
 
-- [ ] T013 [P] [US1] Add contract tests for agent, campaign, execution-plan, and signal-ingestion endpoints in backend/src/test/java/com/chimera/contract/CampaignContractTest.java and backend/src/test/java/com/chimera/contract/SignalContractTest.java
-- [ ] T014 [P] [US1] Add an integration test for campaign approval, task generation, and optimistic state updates in backend/src/test/java/com/chimera/integration/CampaignExecutionFlowTest.java
-- [ ] T015 [P] [US1] Add a frontend launch-and-monitor workflow test in frontend/tests/features/campaigns/campaign-launch-and-monitor.spec.tsx
+- [x] T013 [P] [US1] Add contract tests for agent, campaign, execution-plan, and signal-ingestion endpoints in backend/src/test/java/com/chimera/contract/CampaignContractTest.java and backend/src/test/java/com/chimera/contract/SignalContractTest.java
+- [x] T014 [P] [US1] Add an integration test for campaign approval, task generation, and optimistic state updates in backend/src/test/java/com/chimera/integration/CampaignExecutionFlowTest.java
+- [x] T015 [P] [US1] Add a frontend launch-and-monitor workflow test in frontend/tests/features/campaigns/campaign-launch-and-monitor.spec.tsx
 
 ### Implementation for User Story 1
 
-- [ ] T016 [P] [US1] Create agent, campaign, execution-plan, task, external-signal, content-artifact, and video-render-job models in backend/src/main/java/com/chimera/domain/model/agents/, backend/src/main/java/com/chimera/domain/model/campaigns/, and backend/src/main/java/com/chimera/domain/model/media/
-- [ ] T017 [US1] Implement campaign planning and signal relevance services in backend/src/main/java/com/chimera/service/campaign/CampaignPlanningService.java and backend/src/main/java/com/chimera/service/signals/SignalScoringService.java
-- [ ] T018 [US1] Implement Planner and Worker task lifecycle handling with stale-write protection in backend/src/main/java/com/chimera/service/orchestration/TaskLifecycleService.java and backend/src/main/java/com/chimera/domain/model/shared/VersionedAggregate.java
-- [ ] T019 [US1] Implement content generation, disclosure labeling, video tier selection, and MCP media orchestration in backend/src/main/java/com/chimera/service/orchestration/ContentGenerationService.java and backend/src/main/java/com/chimera/service/media/VideoRenderService.java
-- [ ] T020 [US1] Implement three live publishing and engagement adapters behind the shared contract in backend/src/main/java/com/chimera/persistence/external/connectors/InstagramConnector.java, backend/src/main/java/com/chimera/persistence/external/connectors/TikTokConnector.java, and backend/src/main/java/com/chimera/persistence/external/connectors/YouTubeConnector.java
-- [ ] T021 [US1] Implement agent, campaign, plan-approval, and signal controllers in backend/src/main/java/com/chimera/controller/AgentController.java, backend/src/main/java/com/chimera/controller/CampaignController.java, and backend/src/main/java/com/chimera/controller/SignalController.java
-- [ ] T022 [P] [US1] Build campaign creation, plan review, and monitoring screens in frontend/src/features/campaigns/CampaignCreatePage.tsx, frontend/src/features/campaigns/CampaignPlanPage.tsx, and frontend/src/features/campaigns/CampaignMonitorPage.tsx
-- [ ] T023 [US1] Wire campaign and fleet APIs into TanStack Query hooks in frontend/src/services/api/campaigns.ts, frontend/src/services/api/agents.ts, and frontend/src/features/campaigns/hooks/useCampaigns.ts
+- [x] T016 [P] [US1] Create agent, campaign, execution-plan, task, external-signal, content-artifact, and video-render-job models in backend/src/main/java/com/chimera/domain/model/agents/, backend/src/main/java/com/chimera/domain/model/campaigns/, and backend/src/main/java/com/chimera/domain/model/media/
+- [x] T017 [US1] Implement campaign planning and signal relevance services in backend/src/main/java/com/chimera/service/campaign/CampaignPlanningService.java and backend/src/main/java/com/chimera/service/signals/SignalScoringService.java
+- [x] T018 [US1] Implement Planner and Worker task lifecycle handling with stale-write protection in backend/src/main/java/com/chimera/service/orchestration/TaskLifecycleService.java and backend/src/main/java/com/chimera/domain/model/shared/VersionedAggregate.java
+- [x] T019 [US1] Implement content generation, disclosure labeling, video tier selection, and MCP media orchestration in backend/src/main/java/com/chimera/service/orchestration/ContentGenerationService.java and backend/src/main/java/com/chimera/service/media/VideoRenderService.java
+- [x] T020 [US1] Implement three live publishing and engagement adapters behind the shared contract in backend/src/main/java/com/chimera/persistence/external/connectors/InstagramConnector.java, backend/src/main/java/com/chimera/persistence/external/connectors/TikTokConnector.java, and backend/src/main/java/com/chimera/persistence/external/connectors/YouTubeConnector.java
+- [x] T021 [US1] Implement agent, campaign, plan-approval, and signal controllers in backend/src/main/java/com/chimera/controller/AgentController.java, backend/src/main/java/com/chimera/controller/CampaignController.java, and backend/src/main/java/com/chimera/controller/SignalController.java
+- [x] T022 [P] [US1] Build campaign creation, plan review, and monitoring screens in frontend/src/features/campaigns/CampaignCreatePage.tsx, frontend/src/features/campaigns/CampaignPlanPage.tsx, and frontend/src/features/campaigns/CampaignMonitorPage.tsx
+- [x] T023 [US1] Wire campaign and fleet APIs into TanStack Query hooks in frontend/src/services/api/campaigns.ts, frontend/src/services/api/agents.ts, and frontend/src/features/campaigns/hooks/useCampaigns.ts
 
 **Checkpoint**: User Story 1 should now support the MVP campaign lifecycle independently.
 
@@ -72,17 +72,17 @@
 
 ### Tests for User Story 2
 
-- [ ] T024 [P] [US2] Add contract tests for review-queue and review-decision endpoints in backend/src/test/java/com/chimera/contract/ReviewContractTest.java
-- [ ] T025 [P] [US2] Add an integration test for low-confidence routing, sensitive-topic override, and decision replay in backend/src/test/java/com/chimera/integration/ReviewWorkflowIntegrationTest.java
-- [ ] T026 [P] [US2] Add a frontend reviewer-queue behavior test in frontend/tests/features/review/reviewer-queue.spec.tsx
+- [x] T024 [P] [US2] Add contract tests for review-queue and review-decision endpoints in backend/src/test/java/com/chimera/contract/ReviewContractTest.java
+- [x] T025 [P] [US2] Add an integration test for low-confidence routing, sensitive-topic override, and decision replay in backend/src/test/java/com/chimera/integration/ReviewWorkflowIntegrationTest.java
+- [x] T026 [P] [US2] Add a frontend reviewer-queue behavior test in frontend/tests/features/review/reviewer-queue.spec.tsx
 
 ### Implementation for User Story 2
 
-- [ ] T027 [P] [US2] Create confidence-policy, review-item, and review-decision models in backend/src/main/java/com/chimera/domain/model/policy/ConfidencePolicy.java and backend/src/main/java/com/chimera/domain/model/review/
-- [ ] T028 [US2] Implement confidence scoring, policy evaluation, and mandatory human-review routing in backend/src/main/java/com/chimera/service/policy/ConfidencePolicyService.java and backend/src/main/java/com/chimera/service/review/ReviewRoutingService.java
-- [ ] T029 [US2] Implement reviewer queue, approve or reject or edit handling, and immutable decision capture in backend/src/main/java/com/chimera/controller/ReviewController.java and backend/src/main/java/com/chimera/service/review/ReviewDecisionService.java
-- [ ] T030 [P] [US2] Build the reviewer queue and decision workspace UI in frontend/src/features/review/ReviewQueuePage.tsx and frontend/src/features/review/ReviewDecisionPanel.tsx
-- [ ] T031 [US2] Reflect review outcomes in operator monitoring and audit views in frontend/src/features/campaigns/components/CampaignReviewStatus.tsx and frontend/src/features/audit/AuditTimelinePage.tsx
+- [x] T027 [P] [US2] Create confidence-policy, review-item, and review-decision models in backend/src/main/java/com/chimera/domain/model/policy/ConfidencePolicy.java and backend/src/main/java/com/chimera/domain/model/review/
+- [x] T028 [US2] Implement confidence scoring, policy evaluation, and mandatory human-review routing in backend/src/main/java/com/chimera/service/policy/ConfidencePolicyService.java and backend/src/main/java/com/chimera/service/review/ReviewRoutingService.java
+- [x] T029 [US2] Implement reviewer queue, approve or reject or edit handling, and immutable decision capture in backend/src/main/java/com/chimera/controller/ReviewController.java and backend/src/main/java/com/chimera/service/review/ReviewDecisionService.java
+- [x] T030 [P] [US2] Build the reviewer queue and decision workspace UI in frontend/src/features/review/ReviewQueuePage.tsx and frontend/src/features/review/ReviewDecisionPanel.tsx
+- [x] T031 [US2] Reflect review outcomes in operator monitoring and audit views in frontend/src/features/campaigns/components/CampaignReviewStatus.tsx and frontend/src/features/audit/AuditTimelinePage.tsx
 
 **Checkpoint**: User Story 2 should now provide an independently testable review and governance loop.
 
@@ -96,17 +96,17 @@
 
 ### Tests for User Story 3
 
-- [ ] T032 [P] [US3] Add contract tests for agent creation and memory-writeback history endpoints in backend/src/test/java/com/chimera/contract/AgentMemoryContractTest.java
-- [ ] T033 [P] [US3] Add an integration test for `SOUL.md` immutability, recent-context retention, and Judge-approved Weaviate write-backs in backend/src/test/java/com/chimera/integration/AgentMemoryWritebackIntegrationTest.java
-- [ ] T034 [P] [US3] Add a frontend agent persona and memory continuity test in frontend/tests/features/agents/agent-memory-continuity.spec.tsx
+- [x] T032 [P] [US3] Add contract tests for agent creation and memory-writeback history endpoints in backend/src/test/java/com/chimera/contract/AgentMemoryContractTest.java
+- [x] T033 [P] [US3] Add an integration test for `SOUL.md` immutability, recent-context retention, and Judge-approved Weaviate write-backs in backend/src/test/java/com/chimera/integration/AgentMemoryWritebackIntegrationTest.java
+- [x] T034 [P] [US3] Add a frontend agent persona and memory continuity test in frontend/tests/features/agents/agent-memory-continuity.spec.tsx
 
 ### Implementation for User Story 3
 
-- [ ] T035 [P] [US3] Create soul-definition and agent-memory models in backend/src/main/java/com/chimera/domain/model/agents/SoulDefinition.java and backend/src/main/java/com/chimera/domain/model/agents/AgentMemoryRecord.java
-- [ ] T036 [US3] Implement the `SOUL.md` loader, persona versioning, and immutable persona enforcement in backend/src/main/java/com/chimera/service/agents/SoulDefinitionService.java and backend/src/main/java/com/chimera/service/agents/AgentProfileService.java
-- [ ] T037 [US3] Implement Redis recent-context retrieval and Weaviate biography write-back adapters in backend/src/main/java/com/chimera/persistence/redis/RecentContextStore.java and backend/src/main/java/com/chimera/persistence/weaviate/AgentMemoryVectorStore.java
-- [ ] T038 [US3] Implement the Judge-triggered summarization workflow and memory-writeback endpoint in backend/src/main/java/com/chimera/service/orchestration/JudgeMemoryWritebackService.java and backend/src/main/java/com/chimera/controller/MemoryController.java
-- [ ] T039 [P] [US3] Build agent profile, SOUL definition, and memory timeline screens in frontend/src/features/agents/AgentProfilePage.tsx, frontend/src/features/agents/components/SoulDefinitionCard.tsx, and frontend/src/features/agents/components/AgentMemoryTimeline.tsx
+- [x] T035 [P] [US3] Create soul-definition and agent-memory models in backend/src/main/java/com/chimera/domain/model/agents/SoulDefinition.java and backend/src/main/java/com/chimera/domain/model/agents/AgentMemoryRecord.java
+- [x] T036 [US3] Implement the `SOUL.md` loader, persona versioning, and immutable persona enforcement in backend/src/main/java/com/chimera/service/agents/SoulDefinitionService.java and backend/src/main/java/com/chimera/service/agents/AgentProfileService.java
+- [x] T037 [US3] Implement Redis recent-context retrieval and Weaviate biography write-back adapters in backend/src/main/java/com/chimera/persistence/redis/RecentContextStore.java and backend/src/main/java/com/chimera/persistence/weaviate/AgentMemoryVectorStore.java
+- [x] T038 [US3] Implement the Judge-triggered summarization workflow and memory-writeback endpoint in backend/src/main/java/com/chimera/service/orchestration/JudgeMemoryWritebackService.java and backend/src/main/java/com/chimera/controller/MemoryController.java
+- [x] T039 [P] [US3] Build agent profile, SOUL definition, and memory timeline screens in frontend/src/features/agents/AgentProfilePage.tsx, frontend/src/features/agents/components/SoulDefinitionCard.tsx, and frontend/src/features/agents/components/AgentMemoryTimeline.tsx
 
 **Checkpoint**: User Story 3 should now deliver identity continuity and controlled learning independently.
 
@@ -120,17 +120,17 @@
 
 ### Tests for User Story 4
 
-- [ ] T040 [P] [US4] Add contract tests for wallet lookup and transaction-request endpoints in backend/src/test/java/com/chimera/contract/WalletContractTest.java
-- [ ] T041 [P] [US4] Add an integration test for inbound payments, governed outbound transfers, and suspicious transaction escalation in backend/src/test/java/com/chimera/integration/WalletGovernanceIntegrationTest.java
-- [ ] T042 [P] [US4] Add a frontend wallet-governance flow test in frontend/tests/features/wallets/wallet-governance.spec.tsx
+- [x] T040 [P] [US4] Add contract tests for wallet lookup and transaction-request endpoints in backend/src/test/java/com/chimera/contract/WalletContractTest.java
+- [x] T041 [P] [US4] Add an integration test for inbound payments, governed outbound transfers, and suspicious transaction escalation in backend/src/test/java/com/chimera/integration/WalletGovernanceIntegrationTest.java
+- [x] T042 [P] [US4] Add a frontend wallet-governance flow test in frontend/tests/features/wallets/wallet-governance.spec.tsx
 
 ### Implementation for User Story 4
 
-- [ ] T043 [P] [US4] Create wallet and transaction-request models in backend/src/main/java/com/chimera/domain/model/wallet/Wallet.java and backend/src/main/java/com/chimera/domain/model/wallet/TransactionRequest.java
-- [ ] T044 [US4] Implement wallet balance, inbound payment, and outbound transfer services in backend/src/main/java/com/chimera/service/wallet/WalletService.java and backend/src/main/java/com/chimera/service/wallet/TransactionRequestService.java
-- [ ] T045 [US4] Implement daily-limit, per-action, and anomaly-based policy checks with review escalation in backend/src/main/java/com/chimera/service/wallet/WalletPolicyService.java and backend/src/main/java/com/chimera/service/review/FinancialReviewEscalationService.java
-- [ ] T046 [US4] Implement wallet controllers and campaign budget enforcement hooks in backend/src/main/java/com/chimera/controller/WalletController.java and backend/src/main/java/com/chimera/service/campaign/CampaignBudgetService.java
-- [ ] T047 [P] [US4] Build wallet, balance, and transaction views in frontend/src/features/wallets/WalletPage.tsx, frontend/src/features/agents/components/WalletSummaryCard.tsx, and frontend/src/features/campaigns/components/CampaignFinancePanel.tsx
+- [x] T043 [P] [US4] Create wallet and transaction-request models in backend/src/main/java/com/chimera/domain/model/wallet/Wallet.java and backend/src/main/java/com/chimera/domain/model/wallet/TransactionRequest.java
+- [x] T044 [US4] Implement wallet balance, inbound payment, and outbound transfer services in backend/src/main/java/com/chimera/service/wallet/WalletService.java and backend/src/main/java/com/chimera/service/wallet/TransactionRequestService.java
+- [x] T045 [US4] Implement daily-limit, per-action, and anomaly-based policy checks with review escalation in backend/src/main/java/com/chimera/service/wallet/WalletPolicyService.java and backend/src/main/java/com/chimera/service/review/FinancialReviewEscalationService.java
+- [x] T046 [US4] Implement wallet controllers and campaign budget enforcement hooks in backend/src/main/java/com/chimera/controller/WalletController.java and backend/src/main/java/com/chimera/service/campaign/CampaignBudgetService.java
+- [x] T047 [P] [US4] Build wallet, balance, and transaction views in frontend/src/features/wallets/WalletPage.tsx, frontend/src/features/agents/components/WalletSummaryCard.tsx, and frontend/src/features/campaigns/components/CampaignFinancePanel.tsx
 
 **Checkpoint**: User Story 4 should now provide independently testable governed wallet operations.
 
@@ -140,10 +140,10 @@
 
 **Purpose**: Harden cross-story concerns, operations readiness, and end-to-end validation.
 
-- [ ] T048 [P] Document API flows and connector usage in docs/api/chimera-control-plane.md and docs/architecture/platform-connectors.md
-- [ ] T049 [P] Add observability and governance runbooks in ops/runbooks/campaign-operations.md and ops/runbooks/review-and-wallet-governance.md
-- [ ] T050 Harden Kubernetes deployment manifests and autoscaling telemetry in ops/k8s/backend/, ops/k8s/frontend/, ops/k8s/workers/, and ops/k8s/observability/
-- [ ] T051 Run end-to-end smoke coverage for campaign, review, memory, and wallet flows in frontend/tests/e2e/autonomous-influencer-network.spec.ts and backend/src/test/java/com/chimera/integration/SystemSmokeTest.java
+- [x] T048 [P] Document API flows and connector usage in docs/api/chimera-control-plane.md and docs/architecture/platform-connectors.md
+- [x] T049 [P] Add observability and governance runbooks in ops/runbooks/campaign-operations.md and ops/runbooks/review-and-wallet-governance.md
+- [x] T050 Harden Kubernetes deployment manifests and autoscaling telemetry in ops/k8s/backend/, ops/k8s/frontend/, ops/k8s/workers/, and ops/k8s/observability/
+- [x] T051 Run end-to-end smoke coverage for campaign, review, memory, and wallet flows in frontend/tests/e2e/autonomous-influencer-network.spec.ts and backend/src/test/java/com/chimera/integration/SystemSmokeTest.java
 
 ---
 
