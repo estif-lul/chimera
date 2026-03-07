@@ -1,0 +1,600 @@
+openapi: 3.1.0
+info:
+  title: Chimera Control Plane API
+  version: 0.1.0
+  description: Control plane API contract for Project Chimera campaign management, review, wallet governance, and tenant-scoped operations.
+servers:
+  - url: https://api.chimera.example.com
+tags:
+  - name: Auth
+  - name: Agents
+  - name: Campaigns
+  - name: Memory
+  - name: Review
+  - name: Wallets
+  - name: Signals
+paths:
+  /api/v1/auth/local/login:
+    post:
+      tags: [Auth]
+      summary: Start a local authenticated session.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocalLoginRequest'
+      responses:
+        '200':
+          description: Authenticated session details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionView'
+  /api/v1/auth/session:
+    get:
+      tags: [Auth]
+      summary: Get the current authenticated session.
+      responses:
+        '200':
+          description: Current session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionView'
+  /api/v1/agents:
+    post:
+      tags: [Agents]
+      summary: Create a Chimera agent.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAgentRequest'
+      responses:
+        '201':
+          description: Agent created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentView'
+    get:
+      tags: [Agents]
+      summary: List agents for the active tenant.
+      responses:
+        '200':
+          description: Tenant agents.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentView'
+  /api/v1/agents/{agentId}:
+    get:
+      tags: [Agents]
+      summary: Get a Chimera agent.
+      parameters:
+        - $ref: '#/components/parameters/AgentId'
+      responses:
+        '200':
+          description: Agent details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentView'
+  /api/v1/agents/{agentId}/memory-writebacks:
+    get:
+      tags: [Memory]
+      summary: List long-term memory write-backs for a Chimera agent.
+      parameters:
+        - $ref: '#/components/parameters/AgentId'
+      responses:
+        '200':
+          description: Agent memory write-backs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MemoryWritebackView'
+  /api/v1/campaigns:
+    post:
+      tags: [Campaigns]
+      summary: Create a campaign and generate a reviewable plan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCampaignRequest'
+      responses:
+        '201':
+          description: Campaign created with draft execution plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignView'
+    get:
+      tags: [Campaigns]
+      summary: List campaigns for the active tenant.
+      responses:
+        '200':
+          description: Tenant campaigns.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CampaignView'
+  /api/v1/campaigns/{campaignId}/plan:
+    get:
+      tags: [Campaigns]
+      summary: Get the current execution plan for a campaign.
+      parameters:
+        - $ref: '#/components/parameters/CampaignId'
+      responses:
+        '200':
+          description: Execution plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionPlanView'
+  /api/v1/campaigns/{campaignId}/approve:
+    post:
+      tags: [Campaigns]
+      summary: Approve the current execution plan and activate the campaign.
+      parameters:
+        - $ref: '#/components/parameters/CampaignId'
+      responses:
+        '202':
+          description: Campaign approval accepted.
+  /api/v1/review-items:
+    get:
+      tags: [Review]
+      summary: List pending review items for the active tenant.
+      parameters:
+        - in: query
+          name: queueStatus
+          schema:
+            type: string
+            enum: [pending, claimed]
+        - in: query
+          name: campaignId
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Pending review items.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewItemView'
+  /api/v1/review-items/{reviewItemId}/decisions:
+    post:
+      tags: [Review]
+      summary: Submit a review decision.
+      parameters:
+        - $ref: '#/components/parameters/ReviewItemId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewDecisionRequest'
+      responses:
+        '201':
+          description: Review decision recorded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewDecisionView'
+  /api/v1/agents/{agentId}/wallet:
+    get:
+      tags: [Wallets]
+      summary: Get the wallet for a Chimera agent.
+      parameters:
+        - $ref: '#/components/parameters/AgentId'
+      responses:
+        '200':
+          description: Wallet details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletView'
+  /api/v1/wallets/{walletId}/transactions:
+    post:
+      tags: [Wallets]
+      summary: Create an inbound or outbound transaction request.
+      parameters:
+        - $ref: '#/components/parameters/WalletId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequestInput'
+      responses:
+        '201':
+          description: Transaction request created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionRequestView'
+  /api/v1/signals:
+    post:
+      tags: [Signals]
+      summary: Ingest an MCP Resource-backed external signal for relevance scoring and task creation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignalIngestRequest'
+      responses:
+        '202':
+          description: Signal accepted for processing.
+components:
+  parameters:
+    AgentId:
+      in: path
+      name: agentId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    CampaignId:
+      in: path
+      name: campaignId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ReviewItemId:
+      in: path
+      name: reviewItemId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    WalletId:
+      in: path
+      name: walletId
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    SessionView:
+      type: object
+      required: [userId, tenantWorkspaceId, roles, authProviderType]
+      properties:
+        userId:
+          type: string
+          format: uuid
+        tenantWorkspaceId:
+          type: string
+          format: uuid
+        roles:
+          type: array
+          items:
+            type: string
+        authProviderType:
+          type: string
+          enum: [local, oidc]
+    LocalLoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    CreateAgentRequest:
+      type: object
+      required: [displayName, personaSlug, soulDefinition]
+      properties:
+        displayName:
+          type: string
+        personaSlug:
+          type: string
+        soulDefinition:
+          $ref: '#/components/schemas/SoulDefinitionInput'
+        visualReferenceId:
+          type: string
+    AgentView:
+      type: object
+      required: [id, tenantWorkspaceId, displayName, personaSlug, status, soulDefinitionVersion]
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenantWorkspaceId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        personaSlug:
+          type: string
+        status:
+          type: string
+        soulDefinitionVersion:
+          type: string
+        mutableBiographySummary:
+          type: string
+        visualReferenceId:
+          type: string
+    CreateCampaignRequest:
+      type: object
+      required: [name, goalDescription, targetAudience, agentIds]
+      properties:
+        name:
+          type: string
+        goalDescription:
+          type: string
+        targetAudience:
+          type: string
+        brandConstraints:
+          type: array
+          items:
+            type: string
+        riskProfile:
+          type: string
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        confidencePolicyId:
+          type: string
+          format: uuid
+        budgetPolicyId:
+          type: string
+          format: uuid
+        defaultVideoRenderTier:
+          type: string
+          enum: [tier_1_living_portrait, tier_2_hero_video]
+    CampaignView:
+      type: object
+      required: [id, tenantWorkspaceId, name, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenantWorkspaceId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        status:
+          type: string
+        goalDescription:
+          type: string
+        targetAudience:
+          type: string
+        currentPlanId:
+          type: string
+          format: uuid
+        activeBudgetRemaining:
+          type: string
+    ExecutionPlanView:
+      type: object
+      required: [id, campaignId, planVersion, status, tasks]
+      properties:
+        id:
+          type: string
+          format: uuid
+        campaignId:
+          type: string
+          format: uuid
+        planVersion:
+          type: integer
+        status:
+          type: string
+        summary:
+          type: string
+        acceptanceCriteria:
+          type: array
+          items:
+            type: string
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskSummary'
+    TaskSummary:
+      type: object
+      required: [id, taskType, priority, status, stateVersion]
+      properties:
+        id:
+          type: string
+          format: uuid
+        taskType:
+          type: string
+        priority:
+          type: string
+        videoRenderTier:
+          type: string
+          enum: [tier_1_living_portrait, tier_2_hero_video]
+        status:
+          type: string
+        stateVersion:
+          type: integer
+    MemoryWritebackView:
+      type: object
+      required: [id, chimeraAgentId, memoryType, storageBackend, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        chimeraAgentId:
+          type: string
+          format: uuid
+        memoryType:
+          type: string
+        storageBackend:
+          type: string
+          enum: [weaviate]
+        content:
+          type: string
+        sourceTaskId:
+          type: string
+          format: uuid
+        engagementScore:
+          type: number
+          format: double
+        createdAt:
+          type: string
+          format: date-time
+    ReviewItemView:
+      type: object
+      required: [id, taskId, queueStatus, confidenceScore, policyClassification]
+      properties:
+        id:
+          type: string
+          format: uuid
+        taskId:
+          type: string
+          format: uuid
+        queueStatus:
+          type: string
+        confidenceScore:
+          type: number
+          format: double
+        policyClassification:
+          type: string
+        reasonCodes:
+          type: array
+          items:
+            type: string
+        preview:
+          type: string
+    ReviewDecisionRequest:
+      type: object
+      required: [decisionType]
+      properties:
+        decisionType:
+          type: string
+          enum: [approve, reject, edit]
+        rationale:
+          type: string
+        editedContent:
+          type: string
+    ReviewDecisionView:
+      type: object
+      required: [id, reviewItemId, decisionType, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        reviewItemId:
+          type: string
+          format: uuid
+        decisionType:
+          type: string
+        rationale:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    WalletView:
+      type: object
+      required: [id, chimeraAgentId, status, availableBalance]
+      properties:
+        id:
+          type: string
+          format: uuid
+        chimeraAgentId:
+          type: string
+          format: uuid
+        status:
+          type: string
+        availableBalance:
+          type: string
+        dailySpendLimit:
+          type: string
+        perTransactionLimit:
+          type: string
+    TransactionRequestInput:
+      type: object
+      required: [direction, amount, assetCode]
+      properties:
+        direction:
+          type: string
+          enum: [inbound, outbound]
+        amount:
+          type: string
+        assetCode:
+          type: string
+        counterparty:
+          type: string
+        rationale:
+          type: string
+    TransactionRequestView:
+      type: object
+      required: [id, walletId, direction, amount, assetCode, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        walletId:
+          type: string
+          format: uuid
+        direction:
+          type: string
+        amount:
+          type: string
+        assetCode:
+          type: string
+        status:
+          type: string
+        policyFlags:
+          type: array
+          items:
+            type: string
+    SignalIngestRequest:
+      type: object
+      required: [sourcePlatform, signalType, payloadSummary, mcpResourceType, mcpResourceUri]
+      properties:
+        sourcePlatform:
+          type: string
+        mcpResourceType:
+          type: string
+        mcpResourceUri:
+          type: string
+        signalType:
+          type: string
+        payloadSummary:
+          type: object
+          additionalProperties: true
+        campaignId:
+          type: string
+          format: uuid
+    SoulDefinitionInput:
+      type: object
+      required: [backstory, voiceTone, coreBeliefsAndValues, directives]
+      properties:
+        backstory:
+          type: string
+        voiceTone:
+          type: array
+          items:
+            type: string
+        coreBeliefsAndValues:
+          type: array
+          items:
+            type: string
+        directives:
+          type: array
+          items:
+            type: string
+          type: string
+          format: uuid
+        agentId:
+          type: string
+          format: uuid
