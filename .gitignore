@@ -5,8 +5,7 @@
 *.class
 
 # Maven
-backend/target/*
-
+backend/target/
 # Gradle
 /.gradle/
 /build/
