@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.17.0">
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\ChimeraApplication.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\config\CorrelationIdFilter.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\config\SecurityConfig.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\config\seed\ApplicationDataSeeder.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\config\seed\SeedProperties.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\AgentController.java">
+<error line="9" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\ApiExceptionHandler.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\AuthController.java">
+<error line="8" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\CampaignController.java">
+<error line="3" column="34" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - com.chimera.controller.dto.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="12" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\AgentView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\CampaignView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\CreateAgentRequest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\CreateCampaignRequest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\ExecutionPlanView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\LocalLoginRequest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\MemoryWritebackView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\ReviewDecisionRequest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\ReviewDecisionView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\ReviewItemView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\SessionView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\SignalIngestRequest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\SoulDefinitionInput.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\TaskSummary.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\TransactionRequestInput.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\TransactionRequestView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\dto\WalletView.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\MemoryController.java">
+<error line="8" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\ReviewController.java">
+<error line="10" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\SignalController.java">
+<error line="4" column="8" severity="error" message="Unused import - com.chimera.domain.model.campaigns.ExternalSignal." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+<error line="8" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\controller\WalletController.java">
+<error line="11" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.web.bind.annotation.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\agents\AgentMemoryRecord.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\agents\ChimeraAgent.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\agents\SoulDefinition.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\audit\AuditEvent.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\auth\UserAccount.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\campaigns\Campaign.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\campaigns\CampaignAgentAssignment.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\campaigns\ExecutionPlan.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\campaigns\ExternalSignal.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\campaigns\Task.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\media\ContentArtifact.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\media\VideoRenderJob.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\policy\ConfidencePolicy.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\review\ReviewDecision.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\review\ReviewItem.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\shared\VersionedAggregate.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\tenant\TenantWorkspace.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\wallet\TransactionRequest.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\model\wallet\Wallet.java">
+<error line="3" column="27" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - jakarta.persistence.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\AgentMemoryRecordRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\AuditEventRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\CampaignAgentAssignmentRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\CampaignRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\ChimeraAgentRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\ConfidencePolicyRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\ContentArtifactRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\ExecutionPlanRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\ExternalSignalRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\ReviewDecisionRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\ReviewItemRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\SoulDefinitionRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\TaskRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\TenantWorkspaceRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\TransactionRequestRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\UserAccountRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\VideoRenderJobRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\domain\repository\WalletRepository.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\mcp\McpResourceClient.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\mcp\McpToolClient.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\external\connectors\InstagramConnector.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\external\connectors\PlatformConnector.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\external\connectors\TikTokConnector.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\external\connectors\YouTubeConnector.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\postgres\PostgresConfig.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\redis\RecentContextStore.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\redis\RedisConfig.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\weaviate\AgentMemoryVectorStore.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\persistence\weaviate\WeaviateConfig.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\agents\AgentProfileService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\agents\AgentService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\agents\SoulDefinitionService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\AuditService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\AuthService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\campaign\CampaignBudgetService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\campaign\CampaignPlanningService.java">
+<error line="3" column="8" severity="error" message="Unused import - com.chimera.domain.model.agents.ChimeraAgent." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+<error line="4" column="42" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - com.chimera.domain.model.campaigns.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="5" column="37" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - com.chimera.domain.repository.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\media\VideoRenderService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\orchestration\ContentGenerationService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\orchestration\JudgeMemoryWritebackService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\orchestration\TaskLifecycleService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\policy\ConfidencePolicyService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\review\FinancialReviewEscalationService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\review\ReviewDecisionService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\review\ReviewRoutingService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\signals\SignalScoringService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\wallet\TransactionRequestService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\wallet\WalletPolicyService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\main\java\com\chimera\service\wallet\WalletService.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\contract\AgentMemoryContractTest.java">
+<error line="13" column="80" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.test.web.servlet.result.MockMvcResultMatchers.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\contract\CampaignContractTest.java">
+<error line="11" column="82" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="12" column="80" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.test.web.servlet.result.MockMvcResultMatchers.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\contract\ReviewContractTest.java">
+<error line="13" column="80" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.test.web.servlet.result.MockMvcResultMatchers.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\contract\SignalContractTest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\contract\SkillsInterfaceTest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\contract\TrendFetcherTest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\contract\WalletContractTest.java">
+<error line="9" column="8" severity="error" message="Unused import - java.math.BigDecimal." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+<error line="13" column="47" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.jupiter.api.Assertions.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\integration\AgentMemoryWritebackIntegrationTest.java">
+<error line="13" column="80" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.test.web.servlet.result.MockMvcResultMatchers.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\integration\CampaignExecutionFlowTest.java">
+<error line="13" column="82" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="14" column="80" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.test.web.servlet.result.MockMvcResultMatchers.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\integration\ReviewWorkflowIntegrationTest.java">
+<error line="12" column="80" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.springframework.test.web.servlet.result.MockMvcResultMatchers.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\integration\SystemSmokeTest.java">
+</file>
+<file name="C:\Users\est_lul\Documents\Projects\chimera\backend\src\test\java\com\chimera\integration\WalletGovernanceIntegrationTest.java">
+</file>
+</checkstyle>

@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: com.chimera.integration.AgentMemoryWritebackIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.167 s <<< FAILURE! -- in com.chimera.integration.AgentMemoryWritebackIntegrationTest
+com.chimera.integration.AgentMemoryWritebackIntegrationTest.agentPersonaIsImmutableAfterCreation -- Time elapsed: 0.069 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<500>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.chimera.integration.AgentMemoryWritebackIntegrationTest.agentPersonaIsImmutableAfterCreation(AgentMemoryWritebackIntegrationTest.java:45)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

@@ -1,0 +1,27 @@
+language: en-US
+
+reviews:
+  profile: assertive
+  high_level_summary: true
+  review_status: true
+  request_changes_workflow: true
+  collapse_walkthrough: false
+  path_instructions:
+    - path: "specs/**"
+      instructions: |
+        Treat the specs directory as authoritative. Flag any code or documentation changes that contradict or silently drift from the current Chimera specs and contracts.
+    - path: "backend/src/main/java/**/*.java"
+      instructions: |
+        Review for explicit spec alignment first. Check Java concurrency and thread-safety risks, including unsafe shared mutable state, weak transaction boundaries around concurrent updates, and ad hoc async behavior. Also check for security vulnerabilities such as authn/authz gaps, tenant-boundary violations, secret leakage, unsafe input handling, injection risks, and insecure defaults.
+    - path: "backend/src/test/java/**/*.java"
+      instructions: |
+        Verify tests still reflect the documented contracts and do not encode behavior that conflicts with the specs. Call out missing coverage for thread-safety or security-sensitive paths when production code changes require it.
+    - path: "frontend/**/*.ts"
+      instructions: |
+        Check frontend changes for API/spec drift, insecure client-side assumptions, and any handling that could expose sensitive data or weaken tenant isolation.
+
+chat:
+  auto_reply: true
+
+knowledge_base:
+  opt_out: false

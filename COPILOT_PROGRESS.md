@@ -1,5 +1,62 @@
 # Copilot Progress — Project Chimera
 
+## Session: 2026-03-08 CI and AI Review Policy
+
+### Summary
+- Added a push-triggered GitHub Actions workflow that runs `make test` with the backend's required services, and added a CodeRabbit policy file that emphasizes spec alignment, Java thread safety, and security review.
+
+### Changes
+- **CI workflow**: Added `.github/workflows/main.yml` to run on every push, provision PostgreSQL and Redis service containers, set backend connection environment variables, install Java 21 with Maven cache, and execute `make test` from the repository root.
+- **AI review policy**: Added `.coderabbit.yaml` with path-specific review instructions that treat `specs/` as authoritative and direct the reviewer to focus on spec alignment, Java thread safety, and security vulnerabilities.
+
+### Design Decisions
+- Used `ubuntu-latest` because it provides a straightforward path for `make`, Java, and Docker-backed service containers in GitHub-hosted runners.
+- Matched the workflow database and Redis environment to the defaults already used by the backend so `make test` runs in CI with the same wiring as local execution.
+- Scoped the CodeRabbit instructions by path so backend Java files receive the strongest guidance on contract drift, concurrency safety, and security posture.
+
+### Lessons Learned / Follow-Up
+- The workflow is correctly wired to run `make test`, but the current backend test suite still has known functional failures that will cause the action to fail until those tests or the underlying code are fixed.
+- If the team later enables an actual CodeRabbit app integration, this repository-level policy file is already in place to steer its reviews without additional prompt setup.
+
+## Session: 2026-03-08 Project Makefile Standardization
+
+### Summary
+- Added a root Makefile to standardize backend Java workflow commands and wired a lightweight Maven lint target so the backend has an explicit quality-check entrypoint.
+
+### Changes
+- **Root workflow**: Added `Makefile` with `setup`, `test`, and `lint` targets that execute from the repository root and delegate into `backend/`.
+- **Build-tool detection**: Make targets prefer Maven when `backend/pom.xml` exists and fall back to Gradle wrapper commands if the backend later moves to `gradlew`.
+- **Backend linting**: Added `backend/checkstyle.xml` and configured `maven-checkstyle-plugin` in `backend/pom.xml` so `make lint` runs a real static check instead of a placeholder command.
+
+### Design Decisions
+- Kept the Makefile scoped to the backend module because the request was specifically to standardize the Java build commands, while preserving root-level invocation for convenience.
+- Used a minimal Checkstyle ruleset (`FileTabCharacter`, `AvoidStarImport`, `UnusedImports`) to establish an enforceable baseline without turning this change into a broad formatting migration.
+
+### Lessons Learned / Follow-Up
+- `make test` now reliably wraps the current Maven test suite, which still has pre-existing failures in backend contract and integration tests unrelated to this workflow change.
+- If the team wants stricter linting later, expand `backend/checkstyle.xml` incrementally so new workflow automation does not get blocked by unrelated legacy style debt.
+
+## Session: 2026-03-08 Chimera Skill Definitions
+
+### Summary
+- Added the initial Chimera skill-package structure and documented two critical skill contracts without implementing runtime logic.
+
+### Changes
+- **Skills foundation spec**: Added `specs/skills-foundation.md` to define what a skill package is, the required documentation shape, and the first two critical capabilities.
+- **Skills catalog**: Added `skills/README.md` with naming rules, package conventions, and the current critical skill list.
+- **Skill package drafts**:
+  - `skills/skill_ingest_platform_signals/README.md`
+  - `skills/skill_generate_media_artifact/README.md`
+
+### Design Decisions
+- Kept the initial deliverable documentation-first so the team can align on boundaries before choosing a runtime manifest or implementation format.
+- Anchored perception skills to MCP Resource contracts and media skills to MCP Tool contracts to stay consistent with the existing feature spec.
+- Required tenant, agent, and correlation identifiers in skill contracts so future execution stays auditable and tenant-safe.
+
+### Lessons Learned / Follow-Up
+- A machine-readable skill manifest format is still open; add one only after the runtime loader shape is decided.
+- The next implementation step is to define how the agent runtime discovers skill packages and how these documented contracts map to DTOs or JSON schemas.
+
 ## Session: 2026-03-08 MCP Tooling Strategy
 
 ### Summary
@@ -18,6 +75,21 @@
 ### Lessons Learned / Follow-Up
 - The official filesystem and git servers are reference implementations, so they are appropriate for trusted local development but should not be treated as hardened security boundaries.
 - If the team wants database-aware MCP tooling later, add those servers in user-level configuration or via environment-specific overlays rather than committing connection details into the workspace.
+
+## Session: 2026-03-08 Backend Empty-Slot Tests
+
+### Summary
+- Updated the backend signal contract test and added new red tests that define the missing connector trend normalization and backend skill interface boundaries.
+
+### Changes
+- **Signal contract test**: Tightened `SignalContractTest` so the `/api/v1/signals` endpoint is expected to reject payloads that omit `payloadSummary`, which is still marked as required in the OpenAPI contract.
+- **Trend fetcher contract**: Added `TrendFetcherTest` to require connector `fetchSignals(...)` payloads to include a normalized trend record that matches the signal-ingest contract shape.
+- **Skill interface contract**: Added `SkillsInterfaceTest` to require backend skill interfaces and request envelopes for `skill_ingest_platform_signals` and `skill_generate_media_artifact`, plus explicit `BudgetExceededException` handling for media generation.
+
+### Lessons Learned / Follow-Up
+- The signal ingest DTO and controller validation currently lag the OpenAPI contract because `payloadSummary` is not enforced as required.
+- Platform connectors still return placeholder empty signal lists, so the trend normalization contract is not implemented yet.
+- The new skill specifications are documentation-only today; the backend runtime still needs concrete interfaces, request DTOs, and budget guardrail exception types.
 
 ## Session: 2026-03-08 Default Local Account Seed Data
 

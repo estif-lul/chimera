@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.chimera.contract.TrendFetcherTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! -- in com.chimera.contract.TrendFetcherTest
+com.chimera.contract.TrendFetcherTest.connectorTrendPayloads_matchSignalIngestContract -- Time elapsed: 0.012 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: instagram should return at least one normalized signal payload ==> expected: <false> but was: <true>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertFalse.failNotFalse(AssertFalse.java:63)
+	at org.junit.jupiter.api.AssertFalse.assertFalse(AssertFalse.java:42)
+	at org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:247)
+	at com.chimera.contract.TrendFetcherTest.connectorTrendPayloads_matchSignalIngestContract(TrendFetcherTest.java:37)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
