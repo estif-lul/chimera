@@ -1,6 +1,9 @@
 package com.chimera.domain.model.wallet;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -40,6 +43,7 @@ public class TransactionRequest {
     private String status = "pending";
 
     @Column(name = "policy_flags", columnDefinition = "TEXT[]")
+    @JdbcTypeCode(SqlTypes.ARRAY)
     private List<String> policyFlags = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)

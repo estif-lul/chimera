@@ -1,5 +1,113 @@
 # Copilot Progress — Project Chimera
 
+## Session: 2026-03-08 MCP Tooling Strategy
+
+### Summary
+- Added a shared workspace MCP configuration focused on local development workflows and documented the rationale in research.
+
+### Changes
+- **Workspace MCP config**: Updated `.vscode/mcp.json` to add `filesystem`, `git`, `github`, and `playwright` MCP servers while preserving the existing analytics server.
+- **Tooling strategy doc**: Added `research/tooling_strategy.md` covering selection criteria, server-by-server rationale, Windows prerequisites, and why broader or credential-bound servers were intentionally excluded from shared config.
+
+### Design Decisions
+- Chose a small development-first MCP set instead of a large catalog to keep tool selection predictable and lower the trust surface.
+- Used `npx` for Node-based servers already aligned with frontend prerequisites.
+- Used Docker for the Git MCP server to avoid assuming `uvx` is installed on every developer machine.
+- Kept GitHub MCP on the hosted remote endpoint so the shared workspace config does not commit PAT prompts or credentials.
+
+### Lessons Learned / Follow-Up
+- The official filesystem and git servers are reference implementations, so they are appropriate for trusted local development but should not be treated as hardened security boundaries.
+- If the team wants database-aware MCP tooling later, add those servers in user-level configuration or via environment-specific overlays rather than committing connection details into the workspace.
+
+## Session: 2026-03-08 Default Local Account Seed Data
+
+### Summary
+- Added configurable, idempotent seed data provisioning for the default tenant, admin user, confidence policy, and roles.
+
+### Changes
+- **`SeedProperties`** (`config/seed/SeedProperties.java`): Record-based `@ConfigurationProperties` bound to `chimera.seed.*` covering tenant slug/name, admin email/password/roles, and confidence policy thresholds.
+- **`ApplicationDataSeeder`** (`config/seed/ApplicationDataSeeder.java`): `ApplicationRunner` that checks for existing data before inserting. Creates default tenant workspace, default confidence policy, and default admin user. Fully idempotent — safe on repeated restarts.
+- **`UserAccount.createLocal()`**: Static factory method on the entity for constructing local-auth accounts with tenant, email, hashed password, and roles.
+- **`ChimeraApplication`**: Added `@ConfigurationPropertiesScan` to enable record-based properties binding.
+- **`application.yml`**: Added `chimera.seed.*` defaults — all values overridable via environment variables (`CHIMERA_SEED_ENABLED`, `CHIMERA_SEED_ADMIN_EMAIL`, `CHIMERA_SEED_ADMIN_PASSWORD`, etc.).
+
+### Design Decisions
+- Seed runs as an `ApplicationRunner` (not a Flyway migration) because this is application-level data that depends on BCrypt password encoding, not static SQL.
+- Each seed entity checks existence first (`findBySlug`, `findByTenantWorkspaceIdAndEmail`, `findByTenantWorkspaceIdAndCampaignIdIsNull`) before inserting — idempotent across restarts.
+- Default admin password is configurable and should be changed in production via `CHIMERA_SEED_ADMIN_PASSWORD`.
+- Seed can be disabled entirely with `chimera.seed.enabled=false` or `CHIMERA_SEED_ENABLED=false`.
+
+### Lessons Learned / Follow-Up
+- The default admin password in `application.yml` is a development convenience — production deployments must override it via environment variable or secret.
+- Consider adding a startup warning log when the default password has not been changed.
+
+## Session: 2026-03-08 Frontend Complete Redesign
+
+### Summary
+- Complete frontend UI redesign: premium dark theme, Lucide-React icons, responsive layout with sidebar navigation.
+
+### Changes
+- **Dependency**: Added `lucide-react` icon library.
+- **Design system**: Created `src/styles/global.css` — cohesive dark theme with indigo accent, CSS custom properties for spacing/colors/radii/typography, responsive breakpoints (768px, 480px).
+- **Layout shell**: Created `src/app/Layout.tsx` — sidebar navigation with mobile hamburger menu, sticky topbar, page title derivation.
+- **Entry point**: Updated `src/main.tsx` to import global styles; updated `index.html` with Inter font.
+- **Routing**: Wrapped protected routes in Layout component at `src/routes/index.tsx`.
+- **All page redesigns** (12 files):
+  - Login: centered card with logo, form inputs, loading state.
+  - Auth callback: centered spinner.
+  - Campaign Monitor: stats row, table with status badges, empty state.
+  - Campaign Create: card-based form with checkbox agents, back nav.
+  - Campaign Plan: info cards, task table with priority/status badges.
+  - Campaign Finance/Review Status: card placeholders with icons.
+  - Agent Profile: identity/biography cards, wallet summary, memory timeline.
+  - Agent Memory Timeline: timeline component with dot/line.
+  - Soul Definition Card: info grid layout.
+  - Wallet Summary Card: stat cards.
+  - Wallet Page: stats row, transaction table with directional icons.
+  - Review Queue: stats, table with type icons, status badges.
+  - Review Decision: detail card, radio-pill decision selector, form.
+  - Audit Timeline: table with actor type icons, event badges.
+- **Icon replacements**: Removed all text arrows (`←`) and plus signs (`+`) with Lucide `ArrowLeft`, `Plus`, etc.
+
+### Design Decisions
+- **Palette**: Single dark theme — `#09090b` bg, `#111113` surface, `#6366f1` indigo accent, semantic colors for success/error/warning.
+- **Typography**: Inter font, 14px base, tight heading line-height, uppercase label convention.
+- **Spacing**: 4px base unit scale, consistent padding via CSS vars.
+- **Responsiveness**: 3 breakpoints (1024/768/480), sidebar collapses to overlay on mobile, grid layouts adapt.
+
+### Lessons Learned / Follow-Up
+- Pre-existing `apiClient` type errors in service files (`agents.ts`, `campaigns.ts`, `wallets.ts`, `agentProfile.ts`) treat the object as callable with generics — these should be fixed to use `.get()`/`.post()` methods consistently.
+- Consider adding a CSS reset or Tailwind as complexity grows.
+
+## Session: 2026-03-08 Frontend Import Resolution Fix
+
+### Summary
+- Resolved Vite pre-transform import resolution failure in campaigns hooks.
+
+### Changes
+- Corrected relative re-export path in `frontend/src/features/campaigns/hooks/useCampaigns.ts` from `../../services/api/campaigns` to `../../../services/api/campaigns`.
+
+### Lessons Learned / Follow-Up
+- For deep feature folders, prefer path aliases or verify relative traversal depth (`hooks -> campaigns -> features -> src`) when adding barrel re-exports.
+
+## Session: 2026-03-08 Schema Validation Fixes
+
+### Summary
+- Resolved startup-time Hibernate schema validation failures caused by PostgreSQL `TEXT[]` columns being mapped to scalar `String` fields.
+
+### Changes
+- Updated connector implementations (`InstagramConnector`, `TikTokConnector`, `YouTubeConnector`) to align with the current `PlatformConnector` interface signatures.
+- Updated array-backed JPA fields to explicit SQL array mappings using `@JdbcTypeCode(SqlTypes.ARRAY)`:
+	- `Campaign.brandConstraints`
+	- `ConfidencePolicy.sensitiveTopics`
+	- `ExecutionPlan.acceptanceCriteria`
+	- `ReviewItem.reasonCodes`
+	- `TransactionRequest.policyFlags`
+- Adjusted `ReviewDecisionService` reason-code projection to work with `String[]` model values.
+
+### Lessons Learned / Follow-Up
+- For PostgreSQL array columns, avoid scalar `String` model fields: use array/list types with explicit Hibernate array JDBC typing to keep schema validation stable.
+
 ## Session: Phase 5–7 Implementation (All 51 Tasks Complete)
 
 ### Summary

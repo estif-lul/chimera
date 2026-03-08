@@ -50,6 +50,7 @@ public class ConfidencePolicyService {
                 .orElseGet(() -> new ConfidencePolicy(
                         tenantWorkspaceId,
                         new BigDecimal("0.900"),
-                        new BigDecimal("0.600")));
+                        new BigDecimal("0.600"),
+                        new String[0]));
     }
 }

@@ -1,6 +1,9 @@
 package com.chimera.domain.model.policy;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
@@ -30,7 +33,8 @@ public class ConfidencePolicy {
     private BigDecimal reviewThreshold = new BigDecimal("0.600");
 
     @Column(name = "sensitive_topics", columnDefinition = "TEXT[]")
-    private String sensitiveTopics;
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    private String[] sensitiveTopics;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
@@ -41,10 +45,11 @@ public class ConfidencePolicy {
     protected ConfidencePolicy() {}
 
     public ConfidencePolicy(UUID tenantWorkspaceId, BigDecimal autoApproveThreshold,
-                            BigDecimal reviewThreshold) {
+                            BigDecimal reviewThreshold, String[] sensitiveTopics) {
         this.tenantWorkspaceId = tenantWorkspaceId;
         this.autoApproveThreshold = autoApproveThreshold;
         this.reviewThreshold = reviewThreshold;
+        this.sensitiveTopics = sensitiveTopics;
     }
 
     public UUID getId() { return id; }
@@ -52,7 +57,7 @@ public class ConfidencePolicy {
     public UUID getCampaignId() { return campaignId; }
     public BigDecimal getAutoApproveThreshold() { return autoApproveThreshold; }
     public BigDecimal getReviewThreshold() { return reviewThreshold; }
-    public String getSensitiveTopics() { return sensitiveTopics; }
+    public String[] getSensitiveTopics() { return sensitiveTopics; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
 

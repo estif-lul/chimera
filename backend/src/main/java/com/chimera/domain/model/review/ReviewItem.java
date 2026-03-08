@@ -1,6 +1,9 @@
 package com.chimera.domain.model.review;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
@@ -33,7 +36,8 @@ public class ReviewItem {
     private String queueStatus = "pending";
 
     @Column(name = "reason_codes", columnDefinition = "TEXT[]")
-    private String reasonCodes;
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    private String[] reasonCodes;
 
     @Column(name = "confidence_score", precision = 4, scale = 3)
     private BigDecimal confidenceScore;
@@ -66,7 +70,7 @@ public class ReviewItem {
     public UUID getContentArtifactId() { return contentArtifactId; }
     public UUID getTransactionRequestId() { return transactionRequestId; }
     public String getQueueStatus() { return queueStatus; }
-    public String getReasonCodes() { return reasonCodes; }
+    public String[] getReasonCodes() { return reasonCodes; }
     public BigDecimal getConfidenceScore() { return confidenceScore; }
     public String getPolicyClassification() { return policyClassification; }
     public Instant getCreatedAt() { return createdAt; }

@@ -47,6 +47,27 @@ public class UserAccount {
 
     protected UserAccount() {}
 
+    /**
+     * Creates a new local-authenticated user account.
+     *
+     * @param tenantWorkspaceId owning tenant
+     * @param email             login email
+     * @param passwordHash      BCrypt-encoded password
+     * @param roleSet           comma-separated role list (e.g. "operator,reviewer,admin")
+     * @return an active local user account ready to persist
+     */
+    public static UserAccount createLocal(UUID tenantWorkspaceId, String email,
+                                          String passwordHash, String roleSet) {
+        UserAccount account = new UserAccount();
+        account.tenantWorkspaceId = tenantWorkspaceId;
+        account.email = email;
+        account.passwordHash = passwordHash;
+        account.authProviderType = "local";
+        account.roleSet = roleSet;
+        account.status = "active";
+        return account;
+    }
+
     public UUID getId() { return id; }
     public UUID getTenantWorkspaceId() { return tenantWorkspaceId; }
     public String getEmail() { return email; }

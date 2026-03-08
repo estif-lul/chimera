@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * TikTok publishing and engagement adapter behind the shared PlatformConnector contract.
@@ -16,25 +17,34 @@ public class TikTokConnector implements PlatformConnector {
     private static final Logger log = LoggerFactory.getLogger(TikTokConnector.class);
 
     @Override
+    public String platform() {
+        return "tiktok";
+    }
+
+    @Override
     public ConnectorResponse publishContent(PublishRequest request) {
-        log.info("TikTok: publishing content type={}", request.contentType());
-        return new ConnectorResponse(true, "tt-post-" + System.currentTimeMillis(), Map.of());
+        log.info("TikTok: publishing content for agent={}", request.agentId());
+        String externalId = "tt-post-" + System.currentTimeMillis();
+        return new ConnectorResponse(request.correlationId(), "tiktok", "accepted", externalId,
+                new RateLimitStatus(50, "PT15M"), List.of());
     }
 
     @Override
     public ConnectorResponse replyToInteraction(ReplyRequest request) {
-        log.info("TikTok: replying to interaction={}", request.interactionId());
-        return new ConnectorResponse(true, "tt-reply-" + System.currentTimeMillis(), Map.of());
+        log.info("TikTok: replying to interaction={}", request.externalReplyToId());
+        String externalId = "tt-reply-" + System.currentTimeMillis();
+        return new ConnectorResponse(request.correlationId(), "tiktok", "accepted", externalId,
+                new RateLimitStatus(49, "PT15M"), List.of());
     }
 
     @Override
-    public List<Map<String, Object>> fetchSignals(String mcpResourceUri) {
-        log.info("TikTok: fetching signals from {}", mcpResourceUri);
+    public List<Map<String, Object>> fetchSignals(UUID tenantWorkspaceId, UUID agentId) {
+        log.info("TikTok: fetching signals for tenant={} agent={}", tenantWorkspaceId, agentId);
         return List.of();
     }
 
     @Override
-    public RateLimitStatus validateRateLimit() {
-        return new RateLimitStatus(true, 50, 0);
+    public RateLimitStatus validateRateLimit(UUID tenantWorkspaceId, UUID agentId) {
+        return new RateLimitStatus(50, "PT15M");
     }
 }

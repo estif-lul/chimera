@@ -1,0 +1,10 @@
+com\chimera\contract\WalletContractTest.class
+com\chimera\contract\CampaignContractTest.class
+com\chimera\contract\ReviewContractTest.class
+com\chimera\integration\CampaignExecutionFlowTest.class
+com\chimera\integration\ReviewWorkflowIntegrationTest.class
+com\chimera\integration\WalletGovernanceIntegrationTest.class
+com\chimera\contract\SignalContractTest.class
+com\chimera\integration\SystemSmokeTest.class
+com\chimera\contract\AgentMemoryContractTest.class
+com\chimera\integration\AgentMemoryWritebackIntegrationTest.class

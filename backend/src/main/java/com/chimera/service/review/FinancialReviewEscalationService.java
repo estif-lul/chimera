@@ -28,7 +28,7 @@ public class FinancialReviewEscalationService {
      */
     @Transactional
     public ReviewItem escalate(UUID tenantWorkspaceId, UUID transactionRequestId) {
-        ReviewItem item = new ReviewItem(tenantWorkspaceId, null, transactionRequestId, "transaction_policy_violation");
+        ReviewItem item = new ReviewItem(tenantWorkspaceId, null, null, transactionRequestId, null, "transaction_policy_violation");
         item = reviewItemRepository.save(item);
         log.info("Financial review escalation: reviewItem={} txRequest={}", item.getId(), transactionRequestId);
         return item;

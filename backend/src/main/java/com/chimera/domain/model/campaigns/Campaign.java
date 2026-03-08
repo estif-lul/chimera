@@ -1,6 +1,9 @@
 package com.chimera.domain.model.campaigns;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -28,7 +31,8 @@ public class Campaign {
     private String targetAudience;
 
     @Column(name = "brand_constraints", columnDefinition = "TEXT[]")
-    private String brandConstraints;
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    private String[] brandConstraints;
 
     @Column(name = "risk_profile", length = 64)
     private String riskProfile;
@@ -67,7 +71,7 @@ public class Campaign {
     public String getName() { return name; }
     public String getGoalDescription() { return goalDescription; }
     public String getTargetAudience() { return targetAudience; }
-    public String getBrandConstraints() { return brandConstraints; }
+    public String[] getBrandConstraints() { return brandConstraints; }
     public String getRiskProfile() { return riskProfile; }
     public UUID getBudgetPolicyId() { return budgetPolicyId; }
     public UUID getConfidencePolicyId() { return confidencePolicyId; }

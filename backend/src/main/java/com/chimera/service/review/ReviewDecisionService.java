@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -58,7 +59,7 @@ public class ReviewDecisionService {
 
         ReviewDecision decision = new ReviewDecision(
                 reviewItemId, reviewerUserId,
-                request.decisionType(), request.rationale(), request.editSummary());
+                request.decisionType(), request.rationale(), request.editedContent());
         decision = reviewDecisionRepository.save(decision);
 
         item.resolve(request.decisionType().equals("approve") ? "approved"
@@ -74,16 +75,18 @@ public class ReviewDecisionService {
     }
 
     private ReviewItemView toItemView(ReviewItem i) {
+        double confidence = i.getConfidenceScore() != null ? i.getConfidenceScore().doubleValue() : 0.0;
+        List<String> reasons = i.getReasonCodes() != null
+                ? Arrays.asList(i.getReasonCodes())
+                : List.of();
         return new ReviewItemView(
-                i.getId(), i.getTenantWorkspaceId(), i.getTaskId(),
-                i.getContentArtifactId(), i.getTransactionRequestId(),
-                i.getQueueStatus(), i.getConfidenceScore() != null ? i.getConfidenceScore().toPlainString() : null,
-                i.getPolicyClassification());
+                i.getId(), i.getTaskId(), i.getQueueStatus(),
+                confidence, i.getPolicyClassification(), reasons, null);
     }
 
     private ReviewDecisionView toDecisionView(ReviewDecision d) {
         return new ReviewDecisionView(
-                d.getId(), d.getReviewItemId(), d.getReviewedByUserId(),
-                d.getDecisionType(), d.getRationale(), d.getEditSummary());
+                d.getId(), d.getReviewItemId(),
+                d.getDecisionType(), d.getRationale(), d.getCreatedAt());
     }
 }

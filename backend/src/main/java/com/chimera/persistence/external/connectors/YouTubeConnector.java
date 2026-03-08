@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * YouTube publishing and engagement adapter behind the shared PlatformConnector contract.
@@ -16,25 +17,34 @@ public class YouTubeConnector implements PlatformConnector {
     private static final Logger log = LoggerFactory.getLogger(YouTubeConnector.class);
 
     @Override
+    public String platform() {
+        return "youtube";
+    }
+
+    @Override
     public ConnectorResponse publishContent(PublishRequest request) {
-        log.info("YouTube: publishing content type={}", request.contentType());
-        return new ConnectorResponse(true, "yt-post-" + System.currentTimeMillis(), Map.of());
+        log.info("YouTube: publishing content for agent={}", request.agentId());
+        String externalId = "yt-post-" + System.currentTimeMillis();
+        return new ConnectorResponse(request.correlationId(), "youtube", "accepted", externalId,
+                new RateLimitStatus(200, "PT15M"), List.of());
     }
 
     @Override
     public ConnectorResponse replyToInteraction(ReplyRequest request) {
-        log.info("YouTube: replying to interaction={}", request.interactionId());
-        return new ConnectorResponse(true, "yt-reply-" + System.currentTimeMillis(), Map.of());
+        log.info("YouTube: replying to interaction={}", request.externalReplyToId());
+        String externalId = "yt-reply-" + System.currentTimeMillis();
+        return new ConnectorResponse(request.correlationId(), "youtube", "accepted", externalId,
+                new RateLimitStatus(199, "PT15M"), List.of());
     }
 
     @Override
-    public List<Map<String, Object>> fetchSignals(String mcpResourceUri) {
-        log.info("YouTube: fetching signals from {}", mcpResourceUri);
+    public List<Map<String, Object>> fetchSignals(UUID tenantWorkspaceId, UUID agentId) {
+        log.info("YouTube: fetching signals for tenant={} agent={}", tenantWorkspaceId, agentId);
         return List.of();
     }
 
     @Override
-    public RateLimitStatus validateRateLimit() {
-        return new RateLimitStatus(true, 200, 0);
+    public RateLimitStatus validateRateLimit(UUID tenantWorkspaceId, UUID agentId) {
+        return new RateLimitStatus(200, "PT15M");
     }
 }

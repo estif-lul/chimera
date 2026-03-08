@@ -1,6 +1,9 @@
 package com.chimera.domain.model.campaigns;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -26,7 +29,8 @@ public class ExecutionPlan {
     private String summary;
 
     @Column(name = "acceptance_criteria", columnDefinition = "TEXT[]")
-    private String acceptanceCriteria;
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    private String[] acceptanceCriteria;
 
     @Column(name = "generated_by", length = 128)
     private String generatedBy;
@@ -51,7 +55,7 @@ public class ExecutionPlan {
     public UUID getCampaignId() { return campaignId; }
     public int getPlanVersion() { return planVersion; }
     public String getSummary() { return summary; }
-    public String getAcceptanceCriteria() { return acceptanceCriteria; }
+    public String[] getAcceptanceCriteria() { return acceptanceCriteria; }
     public String getGeneratedBy() { return generatedBy; }
     public String getStatus() { return status; }
     public Instant getCreatedAt() { return createdAt; }
