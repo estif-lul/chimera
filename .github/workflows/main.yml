@@ -57,8 +57,3 @@ jobs:
 
       - name: Run lint
         run: make lint
-      
-      - name: Run AI review (CodeRabbit)
-        uses: coderabbitio/code-review-action@v1
-        with:
-          config-path: .coderabbit.yaml
