@@ -1,3 +1,5 @@
+import { DollarSign } from 'lucide-react';
+
 interface Props {
   campaignId: string;
 }
@@ -8,9 +10,11 @@ interface Props {
  */
 export default function CampaignFinancePanel({ campaignId }: Props) {
   return (
-    <section aria-labelledby="finance-heading">
-      <h4 id="finance-heading">Campaign Finance</h4>
-      <p>Budget tracking for campaign {campaignId} will be displayed here.</p>
+    <section className="card" aria-labelledby="finance-heading">
+      <div className="card-header">
+        <span className="card-title" id="finance-heading"><DollarSign size={18} /> Campaign Finance</span>
+      </div>
+      <p style={{ fontSize: 'var(--text-sm)' }}>Budget tracking for campaign {campaignId} will be displayed here.</p>
     </section>
   );
 }

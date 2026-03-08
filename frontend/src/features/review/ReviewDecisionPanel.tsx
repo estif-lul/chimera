@@ -1,7 +1,18 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../../services/api/client';
+import {
+  ArrowLeft,
+  Loader2,
+  AlertCircle,
+  CheckCircle2,
+  XCircle,
+  Pencil,
+  Send,
+  ShieldCheck,
+  BarChart3,
+} from 'lucide-react';
 
 interface ReviewItemView {
   id: string;
@@ -12,6 +23,12 @@ interface ReviewItemView {
   transactionRequestId: string | null;
 }
 
+const DECISION_OPTIONS = [
+  { value: 'approve', label: 'Approve', icon: CheckCircle2 },
+  { value: 'reject', label: 'Reject', icon: XCircle },
+  { value: 'edit', label: 'Edit', icon: Pencil },
+] as const;
+
 /**
  * Decision workspace for a single review item: approve, reject, or edit.
  */
@@ -20,9 +37,9 @@ export default function ReviewDecisionPanel() {
   const navigate = useNavigate();
   const qc = useQueryClient();
 
-  const item = useQuery({
+  const item = useQuery<ReviewItemView>({
     queryKey: ['reviews', reviewItemId],
-    queryFn: () => apiClient<ReviewItemView>(`/api/v1/reviews/${encodeURIComponent(reviewItemId!)}`),
+    queryFn: () => apiClient.get(`/api/v1/reviews/${encodeURIComponent(reviewItemId!)}`),
     enabled: !!reviewItemId,
   });
 
@@ -32,69 +49,139 @@ export default function ReviewDecisionPanel() {
 
   const submitDecision = useMutation({
     mutationFn: () =>
-      apiClient(`/api/v1/reviews/${encodeURIComponent(reviewItemId!)}/decisions`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ decisionType, rationale, editSummary: editSummary || undefined }),
-      }),
+      apiClient.post(`/api/v1/reviews/${encodeURIComponent(reviewItemId!)}/decisions`, { decisionType, rationale, editSummary: editSummary || undefined }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['reviews'] });
       navigate('/review');
     },
   });
 
-  if (item.isLoading) return <p>Loading...</p>;
-  if (item.isError) return <p role="alert">Error: {item.error.message}</p>;
-  if (!item.data) return <p>Not found.</p>;
+  if (item.isLoading) {
+    return (
+      <div className="loading-state">
+        <Loader2 className="spinner" />
+        <span>Loading review item</span>
+      </div>
+    );
+  }
+
+  if (item.isError) {
+    return (
+      <div className="error-banner" role="alert">
+        <AlertCircle size={16} />
+        {item.error.message}
+      </div>
+    );
+  }
+
+  if (!item.data) {
+    return (
+      <div className="empty-state">
+        <ShieldCheck size={48} />
+        <p>Review item not found.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h1>Review Decision</h1>
-      <dl>
-        <dt>Status</dt><dd>{item.data.queueStatus}</dd>
-        <dt>Confidence</dt><dd>{item.data.confidenceScore ?? '—'}</dd>
-        <dt>Classification</dt><dd>{item.data.policyClassification ?? '—'}</dd>
-      </dl>
+      <Link to="/review" className="back-link">
+        <ArrowLeft size={16} />
+        Back to Queue
+      </Link>
 
-      <form onSubmit={(e) => { e.preventDefault(); submitDecision.mutate(); }}>
-        <fieldset>
-          <legend>Decision</legend>
-          {(['approve', 'reject', 'edit'] as const).map((type) => (
-            <label key={type}>
-              <input
-                type="radio"
-                name="decisionType"
-                value={type}
-                checked={decisionType === type}
-                onChange={() => setDecisionType(type)}
-              />
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </label>
-          ))}
-        </fieldset>
+      <div className="page-header">
+        <h1>Review Decision</h1>
+      </div>
 
-        <div>
-          <label htmlFor="rationale">Rationale</label>
-          <textarea
-            id="rationale"
-            value={rationale}
-            onChange={(e) => setRationale(e.target.value)}
-            required={decisionType !== 'approve'}
-          />
+      <div className="card" style={{ marginBottom: 'var(--space-6)' }}>
+        <div className="card-header">
+          <span className="card-title"><ShieldCheck size={18} /> Item Details</span>
         </div>
-
-        {decisionType === 'edit' && (
-          <div>
-            <label htmlFor="editSummary">Edit Summary</label>
-            <textarea id="editSummary" value={editSummary} onChange={(e) => setEditSummary(e.target.value)} />
+        <div className="info-grid">
+          <div className="info-item">
+            <span className="info-label">Status</span>
+            <span className="info-value">{item.data.queueStatus}</span>
           </div>
-        )}
+          <div className="info-item">
+            <span className="info-label">Confidence</span>
+            <span className="info-value" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+              <BarChart3 size={14} style={{ color: 'var(--color-text-tertiary)' }} />
+              {item.data.confidenceScore ?? '—'}
+            </span>
+          </div>
+          <div className="info-item">
+            <span className="info-label">Classification</span>
+            <span className="info-value">{item.data.policyClassification ?? '—'}</span>
+          </div>
+        </div>
+      </div>
 
-        <button type="submit" disabled={submitDecision.isPending}>
-          {submitDecision.isPending ? 'Submitting...' : 'Submit Decision'}
-        </button>
-      </form>
-      {submitDecision.isError && <p role="alert">Error: {submitDecision.error.message}</p>}
+      <div className="card" style={{ maxWidth: 640 }}>
+        <div className="card-header">
+          <span className="card-title">Decision</span>
+        </div>
+        <form onSubmit={(e) => { e.preventDefault(); submitDecision.mutate(); }} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+          <div className="radio-group">
+            {DECISION_OPTIONS.map(({ value, label, icon: Icon }) => (
+              <label key={value} className="radio-label">
+                <input
+                  type="radio"
+                  name="decisionType"
+                  value={value}
+                  checked={decisionType === value}
+                  onChange={() => setDecisionType(value)}
+                />
+                <Icon size={16} />
+                {label}
+              </label>
+            ))}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="rationale" className="form-label">Rationale</label>
+            <textarea
+              id="rationale"
+              className="form-textarea"
+              value={rationale}
+              onChange={(e) => setRationale(e.target.value)}
+              placeholder="Explain the reasoning behind this decision"
+              required={decisionType !== 'approve'}
+            />
+          </div>
+
+          {decisionType === 'edit' && (
+            <div className="form-group">
+              <label htmlFor="editSummary" className="form-label">Edit Summary</label>
+              <textarea
+                id="editSummary"
+                className="form-textarea"
+                value={editSummary}
+                onChange={(e) => setEditSummary(e.target.value)}
+                placeholder="Describe what was changed"
+              />
+            </div>
+          )}
+
+          <div style={{ display: 'flex', gap: 'var(--space-3)', paddingTop: 'var(--space-2)' }}>
+            <button type="submit" className="btn btn-primary" disabled={submitDecision.isPending}>
+              {submitDecision.isPending ? (
+                <><Loader2 size={16} className="spinner" /> Submitting</>
+              ) : (
+                <><Send size={16} /> Submit Decision</>
+              )}
+            </button>
+            <Link to="/review" className="btn btn-secondary">Cancel</Link>
+          </div>
+        </form>
+      </div>
+
+      {submitDecision.isError && (
+        <div className="error-banner" role="alert" style={{ marginTop: 'var(--space-4)' }}>
+          <AlertCircle size={16} />
+          {submitDecision.error.message}
+        </div>
+      )}
     </div>
   );
 }
