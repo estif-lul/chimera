@@ -41,7 +41,13 @@ public class InstagramConnector implements PlatformConnector {
     @Override
     public List<Map<String, Object>> fetchSignals(UUID tenantWorkspaceId, UUID agentId) {
         log.info("Instagram: fetching signals for tenant={} agent={}", tenantWorkspaceId, agentId);
-        return List.of();
+        return List.of(Map.of(
+                "sourcePlatform", "instagram",
+                "mcpResourceType", "social/trend",
+                "mcpResourceUri", "mcp://instagram/trends/stub-" + agentId,
+                "signalType", "trend",
+                "payloadSummary", Map.of("topic", "placeholder", "score", 0.0)
+        ));
     }
 
     @Override

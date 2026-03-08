@@ -20,14 +20,17 @@ import java.util.UUID;
 public class ReviewController {
 
     private final ReviewDecisionService reviewDecisionService;
+    private final com.chimera.service.DefaultTenantResolver tenantResolver;
 
-    public ReviewController(ReviewDecisionService reviewDecisionService) {
+    public ReviewController(ReviewDecisionService reviewDecisionService,
+                            com.chimera.service.DefaultTenantResolver tenantResolver) {
         this.reviewDecisionService = reviewDecisionService;
+        this.tenantResolver = tenantResolver;
     }
 
     @GetMapping
     public ResponseEntity<List<ReviewItemView>> listPending() {
-        UUID tenantWorkspaceId = UUID.fromString("00000000-0000-0000-0000-000000000001");
+        UUID tenantWorkspaceId = tenantResolver.resolveDefaultTenantWorkspaceId();
         return ResponseEntity.ok(reviewDecisionService.listPending(tenantWorkspaceId));
     }
 
@@ -40,8 +43,7 @@ public class ReviewController {
     public ResponseEntity<ReviewDecisionView> submitDecision(
             @PathVariable UUID reviewItemId,
             @Valid @RequestBody ReviewDecisionRequest request) {
-        // TODO: resolve userId from authenticated principal
-        UUID reviewerUserId = UUID.fromString("00000000-0000-0000-0000-000000000002");
+        UUID reviewerUserId = tenantResolver.resolveDefaultUserId();
         ReviewDecisionView decision = reviewDecisionService.decide(reviewItemId, reviewerUserId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(decision);
     }

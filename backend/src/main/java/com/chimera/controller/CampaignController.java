@@ -4,6 +4,7 @@ import com.chimera.controller.dto.*;
 import com.chimera.domain.model.campaigns.Campaign;
 import com.chimera.domain.model.campaigns.ExecutionPlan;
 import com.chimera.domain.model.campaigns.Task;
+import com.chimera.service.DefaultTenantResolver;
 import com.chimera.service.campaign.CampaignPlanningService;
 import com.chimera.service.orchestration.TaskLifecycleService;
 import jakarta.validation.Valid;
@@ -23,18 +24,20 @@ public class CampaignController {
 
     private final CampaignPlanningService campaignPlanningService;
     private final TaskLifecycleService taskLifecycleService;
+    private final DefaultTenantResolver tenantResolver;
 
     public CampaignController(CampaignPlanningService campaignPlanningService,
-                               TaskLifecycleService taskLifecycleService) {
+                               TaskLifecycleService taskLifecycleService,
+                               DefaultTenantResolver tenantResolver) {
         this.campaignPlanningService = campaignPlanningService;
         this.taskLifecycleService = taskLifecycleService;
+        this.tenantResolver = tenantResolver;
     }
 
     @PostMapping
     public ResponseEntity<CampaignView> createCampaign(@Valid @RequestBody CreateCampaignRequest request) {
-        // TODO: resolve tenantWorkspaceId and userId from authenticated principal
-        UUID tenantWorkspaceId = UUID.fromString("00000000-0000-0000-0000-000000000001");
-        UUID userId = UUID.fromString("00000000-0000-0000-0000-000000000002");
+        UUID tenantWorkspaceId = tenantResolver.resolveDefaultTenantWorkspaceId();
+        UUID userId = tenantResolver.resolveDefaultUserId();
 
         Campaign campaign = campaignPlanningService.createCampaign(
                 tenantWorkspaceId, request.name(), request.goalDescription(),
@@ -45,7 +48,7 @@ public class CampaignController {
 
     @GetMapping
     public ResponseEntity<List<CampaignView>> listCampaigns() {
-        UUID tenantWorkspaceId = UUID.fromString("00000000-0000-0000-0000-000000000001");
+        UUID tenantWorkspaceId = tenantResolver.resolveDefaultTenantWorkspaceId();
         List<CampaignView> campaigns = campaignPlanningService.listCampaigns(tenantWorkspaceId)
                 .stream().map(this::toView).toList();
         return ResponseEntity.ok(campaigns);

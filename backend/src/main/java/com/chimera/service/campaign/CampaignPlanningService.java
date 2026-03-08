@@ -79,7 +79,7 @@ public class CampaignPlanningService {
     @Transactional
     public Campaign approveCampaign(UUID campaignId) {
         Campaign campaign = campaignRepository.findById(campaignId)
-                .orElseThrow(() -> new IllegalArgumentException("Campaign not found: " + campaignId));
+                .orElseThrow(() -> new java.util.NoSuchElementException("Campaign not found: " + campaignId));
 
         ExecutionPlan plan = executionPlanRepository.findByCampaignIdAndStatus(campaignId, "draft")
                 .orElseThrow(() -> new IllegalStateException("No draft plan found for campaign: " + campaignId));
@@ -113,7 +113,7 @@ public class CampaignPlanningService {
     public ExecutionPlan getCurrentPlan(UUID campaignId) {
         List<ExecutionPlan> plans = executionPlanRepository.findByCampaignIdOrderByPlanVersionDesc(campaignId);
         if (plans.isEmpty()) {
-            throw new IllegalArgumentException("No plan found for campaign: " + campaignId);
+            throw new java.util.NoSuchElementException("No plan found for campaign: " + campaignId);
         }
         return plans.getFirst();
     }

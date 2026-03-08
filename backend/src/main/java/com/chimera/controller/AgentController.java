@@ -2,6 +2,7 @@ package com.chimera.controller;
 
 import com.chimera.controller.dto.AgentView;
 import com.chimera.controller.dto.CreateAgentRequest;
+import com.chimera.service.DefaultTenantResolver;
 import com.chimera.service.agents.AgentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,22 +20,23 @@ import java.util.UUID;
 public class AgentController {
 
     private final AgentService agentService;
+    private final DefaultTenantResolver tenantResolver;
 
-    public AgentController(AgentService agentService) {
+    public AgentController(AgentService agentService, DefaultTenantResolver tenantResolver) {
         this.agentService = agentService;
+        this.tenantResolver = tenantResolver;
     }
 
     @PostMapping
     public ResponseEntity<AgentView> createAgent(@Valid @RequestBody CreateAgentRequest request) {
-        // TODO: resolve tenantWorkspaceId from authenticated principal
-        UUID tenantWorkspaceId = UUID.fromString("00000000-0000-0000-0000-000000000001");
+        UUID tenantWorkspaceId = tenantResolver.resolveDefaultTenantWorkspaceId();
         AgentView agent = agentService.createAgent(tenantWorkspaceId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(agent);
     }
 
     @GetMapping
     public ResponseEntity<List<AgentView>> listAgents() {
-        UUID tenantWorkspaceId = UUID.fromString("00000000-0000-0000-0000-000000000001");
+        UUID tenantWorkspaceId = tenantResolver.resolveDefaultTenantWorkspaceId();
         return ResponseEntity.ok(agentService.listAgents(tenantWorkspaceId));
     }
 

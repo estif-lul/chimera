@@ -47,7 +47,7 @@ public class ReviewDecisionService {
     @Transactional(readOnly = true)
     public ReviewItemView getReviewItem(UUID reviewItemId) {
         ReviewItem item = reviewItemRepository.findById(reviewItemId)
-                .orElseThrow(() -> new IllegalArgumentException("Review item not found: " + reviewItemId));
+                .orElseThrow(() -> new java.util.NoSuchElementException("Review item not found: " + reviewItemId));
         return toItemView(item);
     }
 

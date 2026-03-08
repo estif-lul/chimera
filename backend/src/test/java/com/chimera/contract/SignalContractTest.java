@@ -80,6 +80,21 @@ class SignalContractTest {
         static class TestConfig {
 
                 @Bean
+                com.chimera.service.DefaultTenantResolver defaultTenantResolver() {
+                        return new com.chimera.service.DefaultTenantResolver(null, null) {
+                                @Override
+                                public java.util.UUID resolveDefaultTenantWorkspaceId() {
+                                        return java.util.UUID.fromString("00000000-0000-0000-0000-000000000001");
+                                }
+
+                                @Override
+                                public java.util.UUID resolveDefaultUserId() {
+                                        return java.util.UUID.fromString("00000000-0000-0000-0000-000000000002");
+                                }
+                        };
+                }
+
+                @Bean
                 SignalScoringService signalScoringService() {
                         return new SignalScoringService(null) {
                                 @Override

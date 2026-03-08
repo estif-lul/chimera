@@ -40,7 +40,13 @@ public class TikTokConnector implements PlatformConnector {
     @Override
     public List<Map<String, Object>> fetchSignals(UUID tenantWorkspaceId, UUID agentId) {
         log.info("TikTok: fetching signals for tenant={} agent={}", tenantWorkspaceId, agentId);
-        return List.of();
+        return List.of(Map.of(
+                "sourcePlatform", "tiktok",
+                "mcpResourceType", "social/trend",
+                "mcpResourceUri", "mcp://tiktok/trends/stub-" + agentId,
+                "signalType", "trend",
+                "payloadSummary", Map.of("topic", "placeholder", "score", 0.0)
+        ));
     }
 
     @Override

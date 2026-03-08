@@ -1,6 +1,7 @@
 package com.chimera.controller.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -12,6 +13,6 @@ public record SignalIngestRequest(
         @NotBlank String mcpResourceType,
         @NotBlank String mcpResourceUri,
         @NotBlank String signalType,
-        Map<String, Object> payloadSummary,
+        @NotNull Map<String, Object> payloadSummary,
         UUID campaignId
 ) {}

@@ -1,5 +1,18 @@
 # Copilot Progress — Project Chimera
 
+## Session: 2026-03-08 Root README Authoring
+
+### Summary
+- Replaced the empty root `README.md` with a spec-aligned project overview, setup guide, architecture summary, and developer workflow reference.
+
+### Changes
+- Added a full project introduction describing Chimera as a spec-driven autonomous influencer control-plane platform.
+- Documented the current monorepo structure, local dependency stack, Docker Compose workflow, and manual backend/frontend startup commands.
+- Added configuration notes, seeded local credentials, test and lint commands, API doc entry points, and links to core specs and runbooks.
+
+### Lessons Learned / Follow-Up
+- The repository has both current implementation details and target-state specifications, so the README needs to distinguish clearly between what exists now and what the broader product direction still intends to deliver.
+
 ## Session: 2026-03-08 Failing Test Relocation + Full-Stack Docker Compose
 
 ### Summary

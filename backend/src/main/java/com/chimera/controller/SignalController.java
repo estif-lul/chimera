@@ -2,6 +2,7 @@ package com.chimera.controller;
 
 import com.chimera.controller.dto.SignalIngestRequest;
 import com.chimera.domain.model.campaigns.ExternalSignal;
+import com.chimera.service.DefaultTenantResolver;
 import com.chimera.service.signals.SignalScoringService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +18,17 @@ import java.util.UUID;
 public class SignalController {
 
     private final SignalScoringService signalScoringService;
+    private final DefaultTenantResolver tenantResolver;
 
-    public SignalController(SignalScoringService signalScoringService) {
+    public SignalController(SignalScoringService signalScoringService,
+                            DefaultTenantResolver tenantResolver) {
         this.signalScoringService = signalScoringService;
+        this.tenantResolver = tenantResolver;
     }
 
     @PostMapping
     public ResponseEntity<Void> ingestSignal(@Valid @RequestBody SignalIngestRequest request) {
-        // TODO: resolve tenantWorkspaceId from authenticated principal
-        UUID tenantWorkspaceId = UUID.fromString("00000000-0000-0000-0000-000000000001");
+        UUID tenantWorkspaceId = tenantResolver.resolveDefaultTenantWorkspaceId();
 
         signalScoringService.ingest(
                 tenantWorkspaceId,

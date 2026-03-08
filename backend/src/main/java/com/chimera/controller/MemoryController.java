@@ -29,7 +29,7 @@ public class MemoryController {
     @GetMapping
     public ResponseEntity<List<MemoryWritebackView>> getWritebackHistory(@PathVariable UUID agentId) {
         agentRepository.findById(agentId)
-                .orElseThrow(() -> new IllegalArgumentException("Agent not found: " + agentId));
+                .orElseThrow(() -> new java.util.NoSuchElementException("Agent not found: " + agentId));
 
         List<MemoryWritebackView> history = writebackService.getWritebackHistory(agentId)
                 .stream().map(this::toView).toList();
