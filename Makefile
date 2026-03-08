@@ -1,6 +1,7 @@
-.PHONY: setup test lint
+.PHONY: setup test lint docker-test spec-check
 
 BACKEND_DIR := backend
+DOCKER_TEST_IMAGE := chimera-backend-test:latest
 
 ifeq ($(wildcard $(BACKEND_DIR)/pom.xml),$(BACKEND_DIR)/pom.xml)
 SETUP_CMD := mvn clean install -DskipTests
@@ -22,3 +23,10 @@ test:
 
 lint:
 	cd $(BACKEND_DIR) && $(LINT_CMD)
+
+docker-test:
+	docker build -t $(DOCKER_TEST_IMAGE) -f Dockerfile .
+	docker run --rm $(DOCKER_TEST_IMAGE)
+
+spec-check:
+	python scripts/spec_check.py

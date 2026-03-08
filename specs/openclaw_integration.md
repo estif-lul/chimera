@@ -4,6 +4,27 @@
 
 This document defines how Chimera publishes agent availability and operational status to the OpenClaw network. The goal is to make Chimera agents discoverable and trustworthy to other agents and services on OpenClaw while preserving Chimera's tenant boundaries, policy enforcement, auditability, and FastRender orchestration model.
 
+## Publication Contract at a Glance
+
+Chimera publishes two closely related but distinct OpenClaw signals.
+
+- `Availability`: a compact lease-based statement that tells OpenClaw peers if an agent can currently accept network work.
+- `Status`: a richer state statement that explains why the agent is currently available, constrained, or blocked.
+
+Contract intent:
+
+- Availability should be cheap and frequent (heartbeat + lease refresh).
+- Status should be explicit on material transitions (review hold, pause, rate limit, degradation, offline).
+- Both payload types must be derived from Chimera's internal source of truth, signed, and auditable.
+- Chimera must never publish an optimistic `available` signal when internal policy/review state blocks external actions.
+
+Minimum publication guarantees:
+
+- Every OpenClaw-enabled active agent has a renewable status lease.
+- Every material transition emits an event-driven status update.
+- Every publish attempt (success/failure) is persisted with correlation metadata.
+- If Chimera cannot verify freshness, the lease expires and peers treat the agent as stale or offline.
+
 ## Goals
 
 - Publish a machine-readable availability signal for each eligible Chimera agent.
